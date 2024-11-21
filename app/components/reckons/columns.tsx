@@ -7,6 +7,7 @@ import { Checkbox } from "../ui/checkbox"
 import { Button } from "../ui/button"
 import { ArrowUpDown } from "lucide-react"
 import { NavLink } from "@remix-run/react"
+import { AspectRatio } from "../ui/aspect-ratio"
 
 export const columns: ColumnDef<Reckon>[] = [
   {
@@ -43,11 +44,18 @@ export const columns: ColumnDef<Reckon>[] = [
             `block ${isActive ? 'ring-2 ring-primary ring-offset-2 rounded' : ''}`
           }
         >
+            <div className="w-[150px] max-w-[300px]">
+          <AspectRatio ratio={4 / 3}>
+
           <img 
             src={imageUrl} 
             alt="Reckon image" 
-            className="w-[200px] h-auto object-cover rounded"
+            className="w-[300px] h-auto object-cover rounded"
+            
+            
           />
+          </AspectRatio>
+          </div>
         </NavLink>
       )
     },
