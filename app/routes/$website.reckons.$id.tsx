@@ -1,8 +1,10 @@
 import { Link, useLoaderData, useNavigate } from "@remix-run/react";
 import { data } from "../data/data";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, ExternalLink } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { useEffect } from "react";
+import { Badge } from "~/components/ui/badge";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 
 export const loader = async ({params}: {params: {id: string}}) => {
   const currentIndex = data.findIndex((item) => item.id === parseInt(params.id));
@@ -29,6 +31,12 @@ export default function ReckonDetail() {
         navigate(`../${prevId}`);
       } else if (e.key === 'ArrowRight' && nextId) {
         navigate(`../${nextId}`);
+      } else if (e.key.toLowerCase() === 'i') {
+        // Handle ignore action
+        console.log('Ignore clicked');
+      } else if (e.key.toLowerCase() === 't') {
+        // Handle add task action
+        console.log('Add task clicked');
       }
     };
 
@@ -38,22 +46,60 @@ export default function ReckonDetail() {
 
   return (
     <div className="border-l w-full animate-[slideIn_0.3s_ease-out] [&:not(:target)]:animate-[slideOut_0.3s_ease-out] p-10 relative">
-      <div className="flex justify-end">
-      <Button asChild variant="outline" className="ml-auto mb-6">
-          <a href="/reckons">
+      
+        <Card>
+          <CardHeader>
+          <div className="flex justify-end">
+      <Button asChild variant="outline" className="ml-auto ">
+          <a href="../reckons">
             <X />
             Close
           </a>
         </Button>
         </div>
-      <div>
-        <img src={reckon.imageUrl} className="rounded" />
+            
+          </CardHeader>
+          
+          <CardContent>
+          <div>
+        <img src={reckon.imageUrl} className="rounded" alt="Reckon" />
       </div>
+      <div className="text-lg text-bold mt-6">
+        Found on <a href={reckon.pageUrl} className="underline inline-flex items-center gap-1">
+          {reckon.pageUrl}
+          <ExternalLink className="h-4 w-4" />
+        </a>
+      </div>
+      <p className="text-md mt-2 ">Alt tag: "A really descriotive alt tag"</p>
+      {reckon.tag.length > 0 && (
+        <div className="flex flex-wrap gap-2 mt-4">
+          {reckon.tag.map((tag) => (
+            <Badge variant="destructive" key={tag}>{tag}</Badge>
+          ))}
+        </div>
+      )}
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button className="gap-2">
+              Ignore
+              <kbd className=" text-black hidden sm:inline-flex h-5 items-center rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
+                I
+              </kbd>
+            </Button>
+            <Button className="gap-2">
+              Add Task
+              <kbd className=" text-black hidden sm:inline-flex h-5 items-center rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
+                T
+              </kbd>
+            </Button>
+          </CardFooter>
+        </Card>
+      
       <div className="flex justify-between mt-4">
         {prevId && (
           <Button asChild variant="outline">
             <Link to={`../${prevId}`}>
-              <ChevronLeft />
+              
               Previous
               <kbd className="ml-2 hidden sm:inline-flex h-5 items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
                 ←
@@ -61,14 +107,13 @@ export default function ReckonDetail() {
             </Link>
           </Button>
         )}
-        <Button>Ignore</Button>
-        <Button>Add Task</Button>
+        
         
         {nextId && (
           <Button asChild variant="outline">
             <Link to={`../${nextId}`}>
               Next
-              <ChevronRight />
+              
               <kbd className="ml-2 hidden sm:inline-flex h-5 items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
                 →
               </kbd>
