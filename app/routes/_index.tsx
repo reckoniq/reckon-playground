@@ -22,7 +22,7 @@ export default function index() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <div className="grid gap-2">
+            <div className="grid gap-2 c">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
