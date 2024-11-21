@@ -29,11 +29,11 @@ const data = {
   user: {
     name: "Christian Sykes",
     email: "christian@reckoniq.com",
-    avatar: "/avatars/shadcn.jpg",
+    
   },
   teams: [
     {
-      name: "wwww.spark.co.nz",
+      name: "www.spark.co.nz",
       logo: GalleryVerticalEnd,
       
     },
@@ -47,13 +47,13 @@ const data = {
   navMain: [
     {
       title: "Reckons",
-      url: "#",
+      url: "./reckons",
       icon: SquareTerminal,
       isActive: true,      
     },
     {
       title: "Tasks",
-      url: "#",
+      url: "./tasks",
       icon: Bot,
       
     },
